@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>LEO&VACARI – Palco 4K</title>
+
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  width: 3840px;
+  height: 2160px;
+  background: radial-gradient(circle at top, #b00000, #3b0000);
+  overflow: hidden;
+}
+
+/* ===== PALCO ===== */
+.stage {
+  position: relative;
+  width: 2800px;
+  height: 1400px;
+  margin: auto;
+  top: 380px;
+}
+
+/* ===== MOLDURA ===== */
+.frame {
+  position: absolute;
+  inset: 0;
+  border-radius: 50% / 45%;
+  background: #a00000;
+  box-shadow:
+    0 0 120px rgba(255,0,0,0.9),
+    inset 0 0 80px rgba(0,0,0,0.7);
+}
+
+/* ===== LUZES GIRANDO ===== */
+.bulbs {
+  position: absolute;
+  inset: 50px;
+  border-radius: 50% / 45%;
+  animation: rotate 10s linear infinite;
+}
+
+@keyframes rotate {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+.bulb {
+  position: absolute;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: #fff4b0;
+  box-shadow:
+    0 0 20px #fff4b0,
+    0 0 50px #ffd700;
+  animation: blink 1.2s infinite alternate;
+}
+
+@keyframes blink {
+  from { opacity: .4; }
+  to   { opacity: 1; }
+}
+
+/* ===== CENTRO ===== */
+.center {
+  position: absolute;
+  inset: 200px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #000, #111);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ===== LOGO ===== */
+.logo {
+  font-size: 200px;
+  font-weight: 900;
+  letter-spacing: 14px;
+  color: white;
+}
+
+.logo span {
+  color: #ffd700;
+  text-shadow:
+    0 0 20px #ffd700,
+    0 0 50px #ffb700;
+}
+
+/* ===== VARREDURA DE LUZ ===== */
+.scan {
+  position: absolute;
+  inset: 0;
+  border-radius: 50% / 45%;
+  background: linear-gradient(
+    120deg,
+    transparent 40%,
+    rgba(255,255,255,0.25) 50%,
+    transparent 60%
+  );
+  animation: scanMove 10s linear infinite;
+}
+
+@keyframes scanMove {
+  from { transform: translateX(-120%); }
+  to   { transform: translateX(120%); }
+}
+</style>
+</head>
+
+<body>
+
+<div class="stage">
+  <div class="frame"></div>
+
+  <div class="bulbs" id="bulbs"></div>
+
+  <div class="scan"></div>
+
+  <div class="center">
+    <div class="logo">
+      LEO<span>&</span>VACARI
+    </div>
+  </div>
+</div>
+
+<script>
+const bulbs = document.getElementById("bulbs");
+const total = 72;
+
+for (let i = 0; i < total; i++) {
+  const b = document.createElement("div");
+  b.className = "bulb";
+
+  const angle = (360 / total) * i;
+  const radiusX = 1300;
+  const radiusY = 600;
+
+  const x = 1400 + Math.cos(angle * Math.PI / 180) * radiusX;
+  const y = 700 + Math.sin(angle * Math.PI / 180) * radiusY;
+
+  b.style.left = x + "px";
+  b.style.top = y + "px";
+  b.style.animationDelay = (i * 0.05) + "s";
+
+  bulbs.appendChild(b);
+}
+</script>
+
+</body>
+</html>
