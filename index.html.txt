@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>LEO&VACARI – LED WALL 4K</title>
+
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+
+html, body {
+  width: 3840px;
+  height: 2160px;
+  background: radial-gradient(circle at top, #a00000, #2b0000);
+  overflow: hidden;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* ===== PALCO ===== */
+.stage {
+  position: absolute;
+  width: 2800px;
+  height: 1400px;
+  left: 520px;
+  top: 380px;
+}
+
+/* ===== LED WALL ===== */
+.led-wall {
+  position: absolute;
+  inset: -150px;
+  display: grid;
+  grid-template-columns: repeat(40, 1fr);
+  grid-template-rows: repeat(20, 1fr);
+  gap: 14px;
+  z-index: 0;
+}
+
+.led {
+  background: radial-gradient(circle, #ff2a2a, #6b0000);
+  opacity: 0.3;
+  animation: ledPulse 10s linear infinite;
+}
+
+@keyframes ledPulse {
+  0% { opacity: 0.2; }
+  50% { opacity: 0.6; }
+  100% { opacity: 0.2; }
+}
+
+/* ===== MOLDURA ===== */
+.frame {
+  position: absolute;
+  inset: 0;
+  border-radius: 50% / 45%;
+  background: #a00000;
+  box-shadow:
+    0 0 120px rgba(255,0,0,0.9),
+    inset 0 0 80px rgba(0,0,0,0.8);
+  z-index: 2;
+}
+
+/* ===== LUZES GIRANDO ===== */
+.bulbs {
+  position: absolute;
+  inset: 60px;
+  border-radius: 50% / 45%;
+  animation: rotate 10s linear infinite;
+  z-index: 3;
+}
+
+@keyframes rotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.bulb {
+  position: absolute;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: #fff4b0;
+  box-shadow:
+    0 0 20px #fff4b0,
+    0 0 60px #ffd700;
+  animation: blink 1.2s infinite alternate;
+}
+
+@keyframes blink {
+  from { opacity: .4; }
+  to { opacity: 1; }
+}
+
+/* ===== CENTRO ===== */
+.center {
+  position: absolute;
+  inset: 200px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #000, #111);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 4;
+}
+
+/* ===== LOGO ===== */
+.logo {
+  font-size: 200px;
+  font-weight: 900;
+  letter-spacing: 14px;
+  color: #ffffff;
+}
+
+.logo span {
+  color: #ffd700;
+  text-shadow:
+    0 0 30px #ffd700,
+    0 0 80px #ffb700;
+}
+
+/* ===== VARREDURA DE LUZ ===== */
+.scan {
+  position: absolute;
+  inset: 0;
+  border-radius: 50% / 45%;
+  background: linear-gradient(
+    120deg,
+    transparent 40%,
+    rgba(255,255,255,0.25) 50%,
+    transparent 60%
+  );
+  animation: scanMove 10s linear infinite;
+  z-index: 5;
+}
+
+@keyframes scanMove {
+  from { transform: translateX(-120%); }
+  to { transform: translateX(120%); }
+}
+
+/* ===== FUMAÇA ===== */
+.smoke {
+  position: absolute;
+  bottom: -200px;
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, rgba(255,255,255,0.15), transparent 70%);
+  filter: blur(80px);
+  animation: smokeMove 10s linear infinite;
+  z-index: 6;
+}
+
+.smoke.s1 { left: 300px; }
+.smoke.s2 { left: 1100px; animation-delay: 3s; }
+.smoke.s3 { left: 1900px; animation-delay: 6s; }
+
+@keyframes smokeMove {
+  from { transform: translateY(0) scale(1); opacity: .2; }
+  to { transform: translateY(-1200px) scale(1.5); opacity: 0; }
+}
+</style>
+</head>
+
+<body>
+
+<div class="stage">
+
+  <!-- LED WALL -->
+  <div class="led-wall">
+    <script>
+      for(let i=0;i<800;i++){
+        document.write('<div class="led"></div>');
+      }
+    </script>
+  </div>
+
+  <div class="frame"></div>
+
+  <div class="bulbs" id="bulbs"></div>
+
+  <div class="scan"></div>
+
+  <div class="center">
+    <div class="logo">
+      LEO<span>&</span>VACARI
+    </div>
+  </div>
+
+  <!-- FUMAÇA -->
+  <div class="smoke s1"></div>
+  <div class="smoke s2"></div>
+  <div class="smoke s3"></div>
+
+</div>
+
+<script>
+const bulbs = document.getElementById("bulbs");
+const total = 72;
+
+for (let i = 0; i < total; i++) {
+  const b = document.createElement("div");
+  b.className = "bulb";
+
+  const angle = (360 / total) * i;
+  const rx = 1300;
+  const ry = 600;
+
+  const x = 1400 + Math.cos(angle * Math.PI / 180) * rx;
+  const y = 700 + Math.sin(angle * Math.PI / 180) * ry;
+
+  b.style.left = x + "px";
+  b.style.top = y + "px";
+  b.style.animationDelay = (i * 0.05) + "s";
+
+  bulbs.appendChild(b);
+}
+</script>
+
+</body>
+</html>
