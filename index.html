@@ -2,183 +2,241 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<title>Palco Realista – LEO&VACARI</title>
+<title>Show LEO&VACARI – Palco Realista</title>
 
 <style>
-* { margin:0; padding:0; box-sizing:border-box; }
+*{margin:0;padding:0;box-sizing:border-box;}
 
-html, body {
-  width: 3840px;
-  height: 2160px;
-  background: radial-gradient(circle at top, #200000, #000);
-  overflow: hidden;
-  font-family: Arial, Helvetica, sans-serif;
+html,body{
+  width:3840px;
+  height:2160px;
+  background:radial-gradient(circle at top,#250000,#000);
+  overflow:hidden;
+  font-family:Arial,Helvetica,sans-serif;
 }
 
-/* ===== PALCO BASE ===== */
-.stage {
-  position: absolute;
-  width: 3000px;
-  height: 1600px;
-  left: 420px;
-  top: 300px;
+/* ===== CAMERA (ZOOM + PAN) ===== */
+.camera{
+  width:100%;
+  height:100%;
+  animation:cameraMove 10s linear infinite;
+}
+@keyframes cameraMove{
+  0%{transform:scale(1) translate(0,0);}
+  50%{transform:scale(1.03) translate(-30px,-20px);}
+  100%{transform:scale(1) translate(0,0);}
 }
 
-/* ===== TRUSS (ESTRUTURA) ===== */
-.truss {
-  position: absolute;
-  width: 100%;
-  height: 120px;
-  top: 0;
-  background: repeating-linear-gradient(
-    90deg,
-    #666 0 40px,
-    #444 40px 80px
+/* ===== PALCO ===== */
+.stage{
+  position:absolute;
+  width:3000px;
+  height:1600px;
+  left:420px;
+  top:300px;
+}
+
+/* ===== TRUSS ===== */
+.truss{
+  position:absolute;
+  top:0;
+  width:100%;
+  height:120px;
+  background:repeating-linear-gradient(
+    90deg,#777 0 40px,#444 40px 80px
   );
-  box-shadow: inset 0 -10px 20px rgba(0,0,0,.8);
+  box-shadow:inset 0 -20px 30px rgba(0,0,0,.8);
 }
 
-/* ===== LUZES PAR ===== */
-.par {
-  position: absolute;
-  top: 80px;
-  width: 80px;
-  height: 80px;
-  background: radial-gradient(circle, #fff, #555);
-  border-radius: 50%;
-  box-shadow: 0 0 40px rgba(255,255,255,.6);
+/* ===== LED WALL ===== */
+.led-wall{
+  position:absolute;
+  top:200px;
+  left:600px;
+  width:1800px;
+  height:900px;
+  background:repeating-radial-gradient(circle,#ff1a1a 0 3px,#400000 3px 6px);
+  box-shadow:0 0 120px rgba(255,0,0,.8);
+  display:flex;
+  align-items:center;
+  justify-content:center;
 }
 
-.par::after {
+/* ===== LOGO ===== */
+.logo{
+  font-size:200px;
+  font-weight:900;
+  letter-spacing:14px;
+  color:#fff;
+}
+.logo span{
+  color:#ffd700;
+  text-shadow:0 0 40px #ffd700,0 0 80px #ffb700;
+}
+
+/* ===== PAR LIGHTS (BATIDA) ===== */
+.par{
+  position:absolute;
+  top:80px;
+  width:80px;
+  height:80px;
+  border-radius:50%;
+  background:radial-gradient(circle,#fff,#666);
+  box-shadow:0 0 50px rgba(255,255,255,.8);
+  animation:beat 1s infinite;
+}
+@keyframes beat{
+  0%{opacity:.3;}
+  50%{opacity:1;}
+  100%{opacity:.3;}
+}
+.par::after{
   content:"";
   position:absolute;
   top:80px;
   left:50%;
   width:6px;
-  height:500px;
+  height:600px;
   transform:translateX(-50%);
-  background: linear-gradient(to bottom, rgba(255,255,255,.4), transparent);
-  animation: parPulse 3s infinite alternate;
-}
-
-@keyframes parPulse {
-  from { opacity:.2; }
-  to { opacity:.8; }
-}
-
-/* ===== CORTINAS ===== */
-.curtain {
-  position: absolute;
-  top: 120px;
-  width: 600px;
-  height: 1200px;
-  background: linear-gradient(to right, #700000, #b00000, #700000);
-}
-
-.curtain.left { left: 0; }
-.curtain.right { right: 0; }
-
-/* ===== LED WALL ===== */
-.led-wall {
-  position: absolute;
-  top: 200px;
-  left: 600px;
-  width: 1800px;
-  height: 900px;
-  background: repeating-radial-gradient(circle, #ff0000 0 3px, #400000 3px 6px);
-  box-shadow: 0 0 80px rgba(255,0,0,.6);
-}
-
-/* ===== LOGO ===== */
-.logo {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 200px;
-  font-weight: 900;
-  color: #fff;
-  letter-spacing: 14px;
-}
-
-.logo span {
-  color: #ffd700;
-  text-shadow: 0 0 40px #ffd700;
+  background:linear-gradient(to bottom,rgba(255,255,255,.5),transparent);
 }
 
 /* ===== MOVING HEADS ===== */
-.moving {
-  position: absolute;
-  bottom: 0;
-  width: 100px;
-  height: 100px;
-  background: #111;
-  border-radius: 20px;
+.moving{
+  position:absolute;
+  bottom:200px;
+  width:100px;
+  height:100px;
+  background:#111;
+  border-radius:20px;
 }
-
-.moving::after {
+.moving::after{
   content:"";
   position:absolute;
-  top:-600px;
+  top:-700px;
   left:50%;
-  width:8px;
-  height:600px;
-  transform-origin: bottom;
-  transform: translateX(-50%);
-  background: linear-gradient(to top, rgba(0,200,255,.8), transparent);
-  animation: moveLight 4s infinite alternate;
+  width:10px;
+  height:700px;
+  transform-origin:bottom;
+  transform:translateX(-50%);
+  background:linear-gradient(to top,rgba(0,200,255,.8),transparent);
+  animation:movingLight 4s ease-in-out infinite alternate;
+}
+@keyframes movingLight{
+  from{transform:translateX(-50%) rotate(-35deg);}
+  to{transform:translateX(-50%) rotate(35deg);}
 }
 
-@keyframes moveLight {
-  from { transform: translateX(-50%) rotate(-30deg); }
-  to { transform: translateX(-50%) rotate(30deg); }
+/* ===== LASER RGB ===== */
+.laser{
+  position:absolute;
+  top:120px;
+  width:6px;
+  height:1400px;
+  filter:blur(1px);
+  animation:laserMove 3s linear infinite;
+}
+@keyframes laserMove{
+  from{transform:rotate(-30deg);}
+  to{transform:rotate(30deg);}
 }
 
-/* ===== CHÃO DO PALCO ===== */
-.floor {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  height: 200px;
-  background: linear-gradient(to top, #111, #000);
-  box-shadow: inset 0 20px 40px rgba(255,255,255,.05);
+/* ===== FUMAÇA VOLUMÉTRICA ===== */
+.smoke{
+  position:absolute;
+  bottom:-200px;
+  width:800px;
+  height:800px;
+  background:radial-gradient(circle,rgba(255,255,255,.2),transparent 70%);
+  filter:blur(120px);
+  animation:smokeRise 10s linear infinite;
+}
+@keyframes smokeRise{
+  from{transform:translateY(0) scale(1);opacity:.3;}
+  to{transform:translateY(-1400px) scale(1.6);opacity:0;}
+}
+
+/* ===== PÚBLICO ===== */
+.crowd{
+  position:absolute;
+  bottom:0;
+  width:100%;
+  height:300px;
+  background:repeating-linear-gradient(
+    90deg,
+    rgba(0,0,0,.9) 0 40px,
+    rgba(0,0,0,.7) 40px 80px
+  );
+}
+.head{
+  position:absolute;
+  bottom:0;
+  width:50px;
+  height:50px;
+  border-radius:50%;
+  background:#000;
+}
+
+/* ===== CHÃO ===== */
+.floor{
+  position:absolute;
+  bottom:0;
+  width:100%;
+  height:200px;
+  background:linear-gradient(to top,#111,#000);
 }
 </style>
 </head>
 
 <body>
+<div class="camera">
+  <div class="stage">
 
-<div class="stage">
+    <div class="truss"></div>
 
-  <div class="truss"></div>
+    <!-- PAR LIGHTS -->
+    <div class="par" style="left:300px"></div>
+    <div class="par" style="left:900px"></div>
+    <div class="par" style="left:1500px"></div>
+    <div class="par" style="left:2100px"></div>
 
-  <!-- PAR LIGHTS -->
-  <div class="par" style="left:300px"></div>
-  <div class="par" style="left:900px"></div>
-  <div class="par" style="left:1500px"></div>
-  <div class="par" style="left:2100px"></div>
-
-  <!-- CURTAINS -->
-  <div class="curtain left"></div>
-  <div class="curtain right"></div>
-
-  <!-- LED WALL -->
-  <div class="led-wall">
-    <div class="logo">
-      LEO<span>&</span>VACARI
+    <!-- LED WALL -->
+    <div class="led-wall">
+      <div class="logo">LEO<span>&</span>VACARI</div>
     </div>
+
+    <!-- MOVING HEADS -->
+    <div class="moving" style="left:600px"></div>
+    <div class="moving" style="left:1400px"></div>
+    <div class="moving" style="left:2200px"></div>
+
+    <!-- LASERS -->
+    <div class="laser" style="left:800px;background:red"></div>
+    <div class="laser" style="left:1500px;background:lime"></div>
+    <div class="laser" style="left:2200px;background:cyan"></div>
+
+    <!-- FUMAÇA -->
+    <div class="smoke" style="left:200px"></div>
+    <div class="smoke" style="left:1200px;animation-delay:3s"></div>
+    <div class="smoke" style="left:2200px;animation-delay:6s"></div>
+
+    <!-- PÚBLICO -->
+    <div class="crowd" id="crowd"></div>
+
+    <div class="floor"></div>
   </div>
-
-  <!-- MOVING HEADS -->
-  <div class="moving" style="left:500px"></div>
-  <div class="moving" style="left:1400px"></div>
-  <div class="moving" style="left:2300px"></div>
-
-  <!-- FLOOR -->
-  <div class="floor"></div>
-
 </div>
 
+<script>
+// Público
+const crowd=document.getElementById("crowd");
+for(let i=0;i<70;i++){
+  const h=document.createElement("div");
+  h.className="head";
+  h.style.left=(i*55)+"px";
+  h.style.height=(40+Math.random()*20)+"px";
+  crowd.appendChild(h);
+}
+</script>
 </body>
 </html>
