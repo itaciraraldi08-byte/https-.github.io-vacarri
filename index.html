@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<title>LEO&VACARI – LED WALL 4K</title>
+<title>Palco Realista – LEO&VACARI</title>
 
 <style>
 * { margin:0; padding:0; box-sizing:border-box; }
@@ -10,152 +10,139 @@
 html, body {
   width: 3840px;
   height: 2160px;
-  background: radial-gradient(circle at top, #a00000, #2b0000);
+  background: radial-gradient(circle at top, #200000, #000);
   overflow: hidden;
   font-family: Arial, Helvetica, sans-serif;
 }
 
-/* ===== PALCO ===== */
+/* ===== PALCO BASE ===== */
 .stage {
   position: absolute;
-  width: 2800px;
-  height: 1400px;
-  left: 520px;
-  top: 380px;
+  width: 3000px;
+  height: 1600px;
+  left: 420px;
+  top: 300px;
 }
+
+/* ===== TRUSS (ESTRUTURA) ===== */
+.truss {
+  position: absolute;
+  width: 100%;
+  height: 120px;
+  top: 0;
+  background: repeating-linear-gradient(
+    90deg,
+    #666 0 40px,
+    #444 40px 80px
+  );
+  box-shadow: inset 0 -10px 20px rgba(0,0,0,.8);
+}
+
+/* ===== LUZES PAR ===== */
+.par {
+  position: absolute;
+  top: 80px;
+  width: 80px;
+  height: 80px;
+  background: radial-gradient(circle, #fff, #555);
+  border-radius: 50%;
+  box-shadow: 0 0 40px rgba(255,255,255,.6);
+}
+
+.par::after {
+  content:"";
+  position:absolute;
+  top:80px;
+  left:50%;
+  width:6px;
+  height:500px;
+  transform:translateX(-50%);
+  background: linear-gradient(to bottom, rgba(255,255,255,.4), transparent);
+  animation: parPulse 3s infinite alternate;
+}
+
+@keyframes parPulse {
+  from { opacity:.2; }
+  to { opacity:.8; }
+}
+
+/* ===== CORTINAS ===== */
+.curtain {
+  position: absolute;
+  top: 120px;
+  width: 600px;
+  height: 1200px;
+  background: linear-gradient(to right, #700000, #b00000, #700000);
+}
+
+.curtain.left { left: 0; }
+.curtain.right { right: 0; }
 
 /* ===== LED WALL ===== */
 .led-wall {
   position: absolute;
-  inset: -150px;
-  display: grid;
-  grid-template-columns: repeat(40, 1fr);
-  grid-template-rows: repeat(20, 1fr);
-  gap: 14px;
-  z-index: 0;
-}
-
-.led {
-  background: radial-gradient(circle, #ff2a2a, #6b0000);
-  opacity: 0.3;
-  animation: ledPulse 10s linear infinite;
-}
-
-@keyframes ledPulse {
-  0% { opacity: 0.2; }
-  50% { opacity: 0.6; }
-  100% { opacity: 0.2; }
-}
-
-/* ===== MOLDURA ===== */
-.frame {
-  position: absolute;
-  inset: 0;
-  border-radius: 50% / 45%;
-  background: #a00000;
-  box-shadow:
-    0 0 120px rgba(255,0,0,0.9),
-    inset 0 0 80px rgba(0,0,0,0.8);
-  z-index: 2;
-}
-
-/* ===== LUZES GIRANDO ===== */
-.bulbs {
-  position: absolute;
-  inset: 60px;
-  border-radius: 50% / 45%;
-  animation: rotate 10s linear infinite;
-  z-index: 3;
-}
-
-@keyframes rotate {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
-}
-
-.bulb {
-  position: absolute;
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  background: #fff4b0;
-  box-shadow:
-    0 0 20px #fff4b0,
-    0 0 60px #ffd700;
-  animation: blink 1.2s infinite alternate;
-}
-
-@keyframes blink {
-  from { opacity: .4; }
-  to { opacity: 1; }
-}
-
-/* ===== CENTRO ===== */
-.center {
-  position: absolute;
-  inset: 200px;
-  border-radius: 50%;
-  background: radial-gradient(circle, #000, #111);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 4;
+  top: 200px;
+  left: 600px;
+  width: 1800px;
+  height: 900px;
+  background: repeating-radial-gradient(circle, #ff0000 0 3px, #400000 3px 6px);
+  box-shadow: 0 0 80px rgba(255,0,0,.6);
 }
 
 /* ===== LOGO ===== */
 .logo {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   font-size: 200px;
   font-weight: 900;
+  color: #fff;
   letter-spacing: 14px;
-  color: #ffffff;
 }
 
 .logo span {
   color: #ffd700;
-  text-shadow:
-    0 0 30px #ffd700,
-    0 0 80px #ffb700;
+  text-shadow: 0 0 40px #ffd700;
 }
 
-/* ===== VARREDURA DE LUZ ===== */
-.scan {
+/* ===== MOVING HEADS ===== */
+.moving {
   position: absolute;
-  inset: 0;
-  border-radius: 50% / 45%;
-  background: linear-gradient(
-    120deg,
-    transparent 40%,
-    rgba(255,255,255,0.25) 50%,
-    transparent 60%
-  );
-  animation: scanMove 10s linear infinite;
-  z-index: 5;
+  bottom: 0;
+  width: 100px;
+  height: 100px;
+  background: #111;
+  border-radius: 20px;
 }
 
-@keyframes scanMove {
-  from { transform: translateX(-120%); }
-  to { transform: translateX(120%); }
+.moving::after {
+  content:"";
+  position:absolute;
+  top:-600px;
+  left:50%;
+  width:8px;
+  height:600px;
+  transform-origin: bottom;
+  transform: translateX(-50%);
+  background: linear-gradient(to top, rgba(0,200,255,.8), transparent);
+  animation: moveLight 4s infinite alternate;
 }
 
-/* ===== FUMAÇA ===== */
-.smoke {
+@keyframes moveLight {
+  from { transform: translateX(-50%) rotate(-30deg); }
+  to { transform: translateX(-50%) rotate(30deg); }
+}
+
+/* ===== CHÃO DO PALCO ===== */
+.floor {
   position: absolute;
-  bottom: -200px;
-  width: 600px;
-  height: 600px;
-  background: radial-gradient(circle, rgba(255,255,255,0.15), transparent 70%);
-  filter: blur(80px);
-  animation: smokeMove 10s linear infinite;
-  z-index: 6;
-}
-
-.smoke.s1 { left: 300px; }
-.smoke.s2 { left: 1100px; animation-delay: 3s; }
-.smoke.s3 { left: 1900px; animation-delay: 6s; }
-
-@keyframes smokeMove {
-  from { transform: translateY(0) scale(1); opacity: .2; }
-  to { transform: translateY(-1200px) scale(1.5); opacity: 0; }
+  bottom: 0;
+  width: 100%;
+  height: 200px;
+  background: linear-gradient(to top, #111, #000);
+  box-shadow: inset 0 20px 40px rgba(255,255,255,.05);
 }
 </style>
 </head>
@@ -164,57 +151,34 @@ html, body {
 
 <div class="stage">
 
+  <div class="truss"></div>
+
+  <!-- PAR LIGHTS -->
+  <div class="par" style="left:300px"></div>
+  <div class="par" style="left:900px"></div>
+  <div class="par" style="left:1500px"></div>
+  <div class="par" style="left:2100px"></div>
+
+  <!-- CURTAINS -->
+  <div class="curtain left"></div>
+  <div class="curtain right"></div>
+
   <!-- LED WALL -->
   <div class="led-wall">
-    <script>
-      for(let i=0;i<800;i++){
-        document.write('<div class="led"></div>');
-      }
-    </script>
-  </div>
-
-  <div class="frame"></div>
-
-  <div class="bulbs" id="bulbs"></div>
-
-  <div class="scan"></div>
-
-  <div class="center">
     <div class="logo">
       LEO<span>&</span>VACARI
     </div>
   </div>
 
-  <!-- FUMAÇA -->
-  <div class="smoke s1"></div>
-  <div class="smoke s2"></div>
-  <div class="smoke s3"></div>
+  <!-- MOVING HEADS -->
+  <div class="moving" style="left:500px"></div>
+  <div class="moving" style="left:1400px"></div>
+  <div class="moving" style="left:2300px"></div>
+
+  <!-- FLOOR -->
+  <div class="floor"></div>
 
 </div>
 
-<script>
-const bulbs = document.getElementById("bulbs");
-const total = 72;
-
-for (let i = 0; i < total; i++) {
-  const b = document.createElement("div");
-  b.className = "bulb";
-
-  const angle = (360 / total) * i;
-  const rx = 1300;
-  const ry = 600;
-
-  const x = 1400 + Math.cos(angle * Math.PI / 180) * rx;
-  const y = 700 + Math.sin(angle * Math.PI / 180) * ry;
-
-  b.style.left = x + "px";
-  b.style.top = y + "px";
-  b.style.animationDelay = (i * 0.05) + "s";
-
-  bulbs.appendChild(b);
-}
-</script>
-
 </body>
 </html>
-
